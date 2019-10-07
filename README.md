@@ -16,7 +16,7 @@ celery -A zhihu.tools.async worker --loglevel=info
 
 进入zhihu_spider后执行```docker-compose up``` ，进入container后和本地运行方法相同，依次启动mongo、rabbitmq、异步任务、爬虫进程即可。docker采用的image可以参见我的另一个项目[spider-docker](https://github.com/LiuRoy/spider_docker)获取。
 
-## 流程图
+# 流程图
 
 ![流程图](doc/流程图.png)
 
@@ -27,10 +27,10 @@ celery -A zhihu.tools.async worker --loglevel=info
 解析的用户信息包括昵称，头像链接，个人基本信息还有关注人的数量和粉丝的数量。这个页面还能获取关注人页面和粉丝页面。
 * 由上一步获取的分页列表页面和关注人页面获取用户人际关系，这两个页面类似，唯一麻烦的是得到的静态页面最多只有二十个，获取全部的人员必须通过POST请求，解析到的个人主页再由上一步来解析。
 
-## 代码解释
+#代码解释
 
 scrapy文档非常详细，在此我就不详细讲解，你所能碰到的任何疑问都可以在文档中找到解答。
-![代码](doc/代码.png)
+![代码](people/代码.png)
 
 * 爬虫框架从start\_requests开始执行，此部分会提交知乎主页的访问请求给引擎，并设置回调函数为post_login.
 * post\_login解析主页获取\_xsrf保存为成员变量中，并提交登陆的POST请求，设置回调函数为after\_login.
